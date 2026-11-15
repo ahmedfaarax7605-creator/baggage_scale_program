@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Voyage Scale</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="logo" aria-hidden="true">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M9 8V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M4 13h16"/></svg>
+    </div>
+    <div>
+      <h1>Voyage Scale</h1>
+    </div>
+  </header>
+
+  <div class="layout">
+    <div class="col">
+      <section class="panel" aria-label="Sensor equations">
+        <h2>Sensor equations</h2>
+        <p class="hint">x and y are the true loads on platform 1 and 2. Each sensor reads a mix of both.</p>
+        <div class="eqrow" style="--c:var(--emerald)">
+          <span class="label"><i class="dot" style="--c:var(--emerald)"></i>Sensor 1</span>
+          <input id="a" inputmode="numeric" value="2" aria-label="x coefficient, sensor 1"> <b class="vx">x</b> +
+          <input id="b" inputmode="numeric" value="3" aria-label="y coefficient, sensor 1"> <b class="vy">y</b> =
+          <input id="r1" inputmode="numeric" value="18" aria-label="reading, sensor 1"><span class="kg">kg</span>
+        </div>
+        <div class="eqrow" style="--c:var(--sapphire)">
+          <span class="label"><i class="dot" style="--c:var(--sapphire)"></i>Sensor 2</span>
+          <input id="c" inputmode="numeric" value="1" aria-label="x coefficient, sensor 2"> <b class="vx">x</b> +
+          <input id="d" inputmode="numeric" value="2" aria-label="y coefficient, sensor 2"> <b class="vy">y</b> =
+          <input id="r2" inputmode="numeric" value="11" aria-label="reading, sensor 2"><span class="kg">kg</span>
+        </div>
+
+        <div class="sect">
+          <span class="label">Samples</span>
+          <div class="chips" id="samples" style="margin-top:10px">
+            <button class="chip" type="button" data-s="2,3,18,1,2,11"><i class="dot" style="--c:var(--emerald)"></i>Under limit</button>
+            <button class="chip" type="button" data-s="2,1,40,1,3,45"><i class="dot" style="--c:var(--rose)"></i>Overweight</button>
+            <button class="chip" type="button" data-s="4,5,33,2,1,13"><i class="dot" style="--c:var(--sapphire)"></i>Fractions</button>
+            <button class="chip" type="button" data-s="0,2,10,3,1,11"><i class="dot" style="--c:var(--gold-2)"></i>Row swap</button>
+            <button class="chip" type="button" data-s="1,2,6,2,4,12"><i class="dot" style="--c:var(--muted)"></i>No inverse</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" aria-label="Allowance">
+        <h2>Baggage allowance</h2>
+        <p class="hint">Pick the limit for this bag.</p>
+        <div class="chips" id="limits">
+          <button class="chip" type="button" data-l="7" aria-pressed="false">7 kg</button>
+          <button class="chip" type="button" data-l="15" aria-pressed="false">15 kg</button>
+          <button class="chip" type="button" data-l="20" aria-pressed="false">20 kg</button>
+          <button class="chip" type="button" data-l="23" aria-pressed="true">23 kg</button>
+          <button class="chip" type="button" data-l="32" aria-pressed="false">32 kg</button>
+          <button class="chip" type="button" data-l="custom" aria-pressed="false">Custom</button>
+        </div>
+        <div class="customrow" id="customRow" hidden>
+          <label class="label" for="custom">Limit</label><input id="custom" inputmode="numeric" value="25"><span class="kg">kg</span>
+        </div>
+      </section>
+    </div>
+
+    <div class="col">
+      <div id="result" aria-live="polite"></div>
+      <details class="panel working" id="wk">
+        <summary>Show the working <small>inverse matrix steps</small></summary>
+        <div id="work"></div>
+      </details>
+    </div>
+  </div>
+
+  <section class="panel" aria-label="Weigh log">
+    <div class="loghead"><div><h2>Weigh log</h2><p class="hint" style="margin:0">Saved on this device only.</p></div><button class="btn ghost" id="clearLog" type="button" hidden>Clear</button></div>
+    <ul class="log" id="log"></ul>
+    <p class="empty" id="logEmpty">No weighings saved yet. Press Save weighing on the tag.</p>
+  </section>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
